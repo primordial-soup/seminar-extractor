@@ -1,0 +1,13 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use FindBin qw($Bin);
+use lib "$Bin/../lib";
+
+use Seminar::Extractor::UH::CS;
+
+my $cs = Seminar::Extractor::UH::CS->new();
+
+use DDP; p $cs->extract;
