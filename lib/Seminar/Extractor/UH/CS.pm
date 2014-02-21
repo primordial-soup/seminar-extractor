@@ -2,22 +2,14 @@ package Seminar::Extractor::UH::CS;
 
 use strict;
 use warnings;
-use Seminar::Config;
 use Moo;
-
 use Web::Scraper;
 
 has _url => (
-	is => 'ro',
-	default => sub { 'http://www.cs.uh.edu/news-events/seminars/' }
+	is => 'ro', default => sub { 'http://www.cs.uh.edu/news-events/seminars/' }
 );
 
-sub _content {
-	my ($self) = @_;
-	Seminar::Config->instance->mechanize->get( $self->_url );
-}
-
-has _extractor => (
+has _web_scraper => (
 	is => 'ro',
 	default => sub {
 		scraper { process 'tr', 'events[]' => scraper {
@@ -36,7 +28,9 @@ has _extractor => (
 
 sub extract {
 	my ($self) = @_;
-	$self->_extractor->scrape( $self->_content );
+	$self->_scrape;
 }
+
+with 'Seminar::Extractor::Role::WebScraperExtractable';
 
 1;
