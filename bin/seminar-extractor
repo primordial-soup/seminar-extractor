@@ -10,4 +10,5 @@ use Seminar::Extractor::UH::CS;
 
 my $cs = Seminar::Extractor::UH::CS->new();
 
-use DDP; p $cs->extract;
+use DDP; p
+$cs->extract;
