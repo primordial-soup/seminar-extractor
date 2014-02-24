@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use DateTime::Format::Natural;
-use Data::Rmap qw(rmap rmap_hash);
+use Data::Rmap qw(rmap_hash);
 use HTML::FormatText;
 
 use Moo::Role;
@@ -27,15 +27,14 @@ has _dt_parser => (
 sub _dt_fmt_natural_extract {
 	my ($self, $data) = @_;
 	rmap_hash {
-		my $hash = $_;
 		if( defined $_ and exists $_->{time}  ) {
 			my $text = HTML::FormatText->format_string( $_->{time} );
 			my $substring = $self->_dt_parser->extract_datetime( $text );
 
-			#$hash->{datetime_text} = $text; #DEBUG
-			#$hash->{datetime_text_sub} = $substring; #DEBUG
+			#$_->{datetime_text} = $text; #DEBUG
+			#$_->{datetime_text_sub} = $substring; #DEBUG
 			my $dt = $self->_dt_parser->parse_datetime( $substring );
-			$hash->{datetime} = $dt;
+			$_->{datetime} = $dt;
 		}
 	} $data;
 	$data;

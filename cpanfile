@@ -10,3 +10,5 @@ requires 'DateTime::TimeZone';
 requires 'Data::Rmap';
 requires 'HTML::FormatText';
 requires 'aliased';
+requires 'IPC::Run3';
+requires 'URL::Normalize';
