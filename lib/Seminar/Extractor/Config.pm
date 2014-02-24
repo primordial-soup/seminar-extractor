@@ -1,4 +1,4 @@
-package Seminar::Config;
+package Seminar::Extractor::Config;
 
 use strict;
 use warnings;

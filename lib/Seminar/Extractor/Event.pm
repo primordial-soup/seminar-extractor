@@ -1,4 +1,4 @@
-package Seminar::Event;
+package Seminar::Extractor::Event;
 
 use strict;
 use warnings;

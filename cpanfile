@@ -9,3 +9,4 @@ requires 'DateTime::Format::Natural';
 requires 'DateTime::TimeZone';
 requires 'Data::Rmap';
 requires 'HTML::FormatText';
+requires 'aliased';

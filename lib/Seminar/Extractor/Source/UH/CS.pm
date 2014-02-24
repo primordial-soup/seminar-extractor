@@ -1,4 +1,4 @@
-package Seminar::Extractor::UH::CS;
+package Seminar::Extractor::Source::UH::CS;
 
 use strict;
 use warnings;

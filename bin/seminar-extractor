@@ -6,9 +6,9 @@ use warnings;
 use FindBin qw($Bin);
 use lib "$Bin/../lib";
 
-use Seminar::Extractor::UH::CS;
+use aliased 'Seminar::Extractor::Source::UH::CS' => 'UHCS';
 
-my $cs = Seminar::Extractor::UH::CS->new();
+my $cs = UHCS->new();
 
 use DDP; p
 $cs->extract;
