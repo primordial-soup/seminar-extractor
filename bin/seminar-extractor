@@ -7,8 +7,18 @@ use FindBin qw($Bin);
 use lib "$Bin/../lib";
 
 use aliased 'Seminar::Extractor::Source::UH::CS' => 'UHCS';
+use XML::Feed;
 
 my $cs = UHCS->new();
 
-use DDP; p
-$cs->extract;
+my $events = $cs->events_arrayref;
+
+my $feed = XML::Feed->new('Atom');
+
+for my $event (@$events) {
+	my $entry = XML::Feed::Entry->new('Atom');
+	$event->as_feed_entry($entry);
+	$feed->add_entry($entry);
+}
+
+print $feed->as_xml;

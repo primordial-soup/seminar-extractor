@@ -7,6 +7,8 @@ use Web::Scraper;
 use Data::Rmap qw(rmap_hash);
 
 use Seminar::Extractor::Util;
+use Seminar::Extractor::Event;
+use HTML::FormatText;
 use URL::Normalize;
 
 has _url => (
@@ -66,6 +68,27 @@ sub extract {
 		}
 	} $data;
 	$data;
+}
+
+sub events_arrayref {
+	my ($self) = @_;
+	my $data = $self->extract();
+	[ rmap_hash {
+		if( defined $_ and exists $_->{description} ) {
+			my $description = $_->{abstract};
+			my $datetime = $_->{datetime};
+			my $title = HTML::FormatText
+				->format_string($_->{description}{body});
+			my $link = $_->{description}{link};
+			return Seminar::Extractor::Event->new(
+				title => $title,
+				datetime => $datetime,
+				description => $description,
+				link => $link,
+			);
+		}
+		();
+	} $data ];
 }
 
 
