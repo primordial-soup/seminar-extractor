@@ -12,3 +12,6 @@ requires 'HTML::FormatText';
 requires 'aliased';
 requires 'IPC::Run3';
 requires 'URL::Normalize';
+requires 'XML::Feed';
+requires 'Data::ICal';
+requires 'Data::ICal::DateTime';
