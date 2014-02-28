@@ -15,3 +15,5 @@ requires 'URL::Normalize';
 requires 'XML::Feed';
 requires 'Data::ICal';
 requires 'Data::ICal::DateTime';
+
+requires 'Data::Printer';

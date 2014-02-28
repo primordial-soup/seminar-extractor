@@ -8,17 +8,45 @@ use lib "$Bin/../lib";
 
 use aliased 'Seminar::Extractor::Source::UH::CS' => 'UHCS';
 use XML::Feed;
+use Data::ICal;
+use Getopt::Long::Descriptive;
+
+my ($opt, $usage) = describe_options(
+"$0 %o",
+	[ 'ical', "dump iCalendar file" ],
+	[ 'atom',   "dump Atom feed",   ],
+	[],
+	[ 'verbose|v',  "print information"            ],
+	[ 'help|h',       "print usage message and exit" ],
+);
+
+if($opt->help) {
+	print $usage;
+	exit;
+}
+
+Seminar::Extractor::Config->instance->_verbose(1) if $opt->verbose;
+
 
 my $cs = UHCS->new();
 
 my $events = $cs->events_arrayref;
 
-my $feed = XML::Feed->new('Atom');
-
-for my $event (@$events) {
-	my $entry = XML::Feed::Entry->new('Atom');
-	$event->as_feed_entry($entry);
-	$feed->add_entry($entry);
+if( $opt->ical ) {
+	my $ical = Data::ICal->new;
+	for my $event (@$events) {
+		my $entry = $event->as_data_ical_event;
+		$ical->add_entry($entry)
+	}
+	print $ical->as_string;
+} else {
+	# otherwise use Atom
+	my $feed = XML::Feed->new('Atom');
+	for my $event (@$events) {
+		my $entry = XML::Feed::Entry->new('Atom');
+		$event->as_feed_entry($entry);
+		$feed->add_entry($entry);
+	}
+	print $feed->as_xml;
 }
 
-print $feed->as_xml;

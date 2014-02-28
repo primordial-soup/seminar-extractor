@@ -11,6 +11,8 @@ use Seminar::Extractor::Event;
 use HTML::FormatText;
 use URL::Normalize;
 
+use v5.12;
+
 has _url => (
 	is => 'ro', default => sub { 'http://www.cs.uh.edu/news-events/seminars/' },
 );
@@ -62,7 +64,10 @@ sub extract {
 			$normalizer->remove_dot_segments;
 			$_->{description}{link} = $normalizer->get_url;
 
-			use DDP; p $_->{description}{link};
+			if( Seminar::Extractor::Config->instance->_verbose ) {
+				#say $_->{description}{link};
+				use DDP; p $_->{description}{link};
+			}
 			my $abstract = $self->_extract_abstract($_->{description}{link});
 			$_->{abstract} = $abstract->{abstract};
 		}

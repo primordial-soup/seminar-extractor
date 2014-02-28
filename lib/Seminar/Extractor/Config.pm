@@ -10,6 +10,9 @@ use Path::Class;
 use File::HomeDir;
 use WWW::Mechanize::Cached;
 
+
+has _verbose => ( is => 'rw', default => sub { 0 }  );
+
 has _app_name => ( is => 'ro', default => sub { 'seminar-extractor' });
 
 has chi => ( is => 'lazy' );

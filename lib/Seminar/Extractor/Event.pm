@@ -17,6 +17,8 @@ has description => ( is => 'rw' );
 
 has link => ( is => 'rw' );
 
+has location => ( is => 'rw' );
+
 sub as_feed_entry {
 	my ($self, $entry) = @_;
 	$entry->title( $self->title );
@@ -24,6 +26,16 @@ sub as_feed_entry {
 	$entry->link( $self->link );
 	$entry->content( $self->description );
 	$entry;
+}
+
+sub as_data_ical_event {
+	my ($self) = @_;
+	my $event = Data::ICal::Entry::Event->new();
+	$event->add_property( start => $self->datetime );
+	$event->add_property( summary => $self->title );
+	$event->add_property( description => $self->description );
+	$event->add_property( url => $self->link );
+	$event;
 }
 
 1;
